@@ -1,0 +1,1 @@
+This project is about installation and settings
