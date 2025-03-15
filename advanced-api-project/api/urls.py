@@ -13,3 +13,5 @@ urlpatterns = [
     # Delete a book by pk [DELETE]
     path("books/delete/<int:pk>/", views.DeleteView.as_view())
 ]
+
+api.urls
