@@ -1,0 +1,47 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% block title %}Home{% endblock %}
+{% block content %}
+    <p>Welcome {{ user }}</p>
+    <form method="POST" action="{% url 'search' %}">
+        {% csrf_token %}
+        {{form.name}}
+        <button type="submit">Search</button>
+    </form>
+    <section>
+        {% for post in all_posts %}
+            <ul style="list-style: none;">
+                <li>Author: <a href="{% url 'userposts' post.author.id %}" style="text-decoration: none;">{{post.author.username}}</a></li>
+                <li>Post Title: {{post.title}}</li>
+                <li>Post Content: <a href="{% url 'view-post' post.id %}" style="text-decoration: none; color: green;">{{post.content|truncatechars:5}}</a></li>
+                <li>Date Published: {{post.published_date}} </li>
+                <li>Tags: 
+                    {% for tag in post.tags.all %}
+                        <span style="color: blue;">{{ tag.name }}</span>{% if not forloop.last %}, {% endif %}
+                    {% empty %}
+                        No tags
+                    {% endfor %}
+                </li>
+                
+                <form method="POST" action="{% url 'view-post' post.id %}">
+                    {% csrf_token %}
+                    <button style="background-color: burlywood; color: brown;cursor: pointer;">Add Comment 
+                    </button>
+                    {{count}} comment(s)   
+                </form>
+                {% if post.author.id == user.id %}
+                    <form method="POST" action="{% url 'update-post' post.id %}">
+                        {% csrf_token %}
+                        <button style="background-color: black; color: white;cursor: pointer;">Edit post
+                        </button>
+                    </form>
+                    <form method="POST" action="{% url 'delete-post' post.id %}">
+                        {% csrf_token %}
+                        <button style="background-color: red; color: white;cursor: pointer;">Delete post
+                        </button>
+                    </form>  
+                {% endif %}
+            </ul>
+        {% endfor %}
+    </section>
+{% endblock %}
