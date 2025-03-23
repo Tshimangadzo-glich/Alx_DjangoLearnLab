@@ -1,0 +1,33 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% block title %}Post{% endblock %}
+{% block content %}
+    <section>
+        <h1>{{post_author}}'s post</h1>
+        <ul style="list-style: none;">
+            <li>Posted By: {{post.author.username}}</li>
+            <li>Post Title: {{post.title}}</li>
+            <li>Post Content: {{post.content}} </li>
+            <li>Date Published: {{post.published_date}} </li>
+            <li>Tag: {{post.tags}} </li>
+        </ul>
+        {% for comment in all_comments %}
+            <ul style="list-style: none;">
+                <li><a href="{% url 'userposts' comment.author.id %}" style="text-decoration: none;">{{comment.author.username}}: </a></li>{{comment.content}} {{comment.created_at}}
+            </ul>
+            {% if comment.author.id == user.id %}
+                <form method="POST" action="{% url 'delete-comment' comment.id %}">
+                    {% csrf_token %}
+                    <button style="background-color: red; color: white;cursor: pointer;">Delete Comment
+                    </button>
+                </form>
+            {% endif %}
+        {% endfor %}
+        <form method="POST" action="{% url 'add-comment' post.id %}">
+            {% csrf_token %}
+            {{form}}
+            <button style="background-color: burlywood; color: brown;cursor: pointer;">Comment
+            </button>
+        </form>
+    </section>
+{% endblock %}
