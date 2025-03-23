@@ -1,0 +1,25 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% block title %}Register{% endblock %}
+{% block content %}
+    <form method="POST" action="{% url 'register' %}">
+        {% csrf_token %}
+        
+        <div>
+            <label for="{{ field.id_for_label }}">{{ form.email.label }}</label>
+                {{ form.email }}
+                <p style="color: red;">{{ form.email.error }}</p>
+            <label for="{{ field.id_for_label }}">{{ form.username.label }}</label>
+                {{ form.username }}
+                <p style="color: red;">{{ form.username.error }}</p>
+            <label for="{{ field.id_for_label }}">{{ form.password1.label }}</label>
+                {{ form.password1 }}
+                <p style="color: red;">{{ form.password1.error }}</p> 
+            <label for="{{ field.id_for_label }}">{{ form.password2.label }}</label>
+                {{ form.password2 }}
+                <p style="color: red;">{{ form.password2.error }}</p>
+        </div>
+        
+        <button type="submit">Register</button>
+    </form>
+{% endblock %}
