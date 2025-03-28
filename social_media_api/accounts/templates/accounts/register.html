@@ -1,9 +1,0 @@
-{% extends 'accounts/base.html' %}
-{% block title %}Register{% endblock %}
-{% block content %}
-    <form method="POST" action="">
-        {% csrf_token %}
-        {{form}}
-        <button type="submit">Register</button>
-    </form>
-{% endblock %}
