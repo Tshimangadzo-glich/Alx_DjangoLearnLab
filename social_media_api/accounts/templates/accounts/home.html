@@ -1,0 +1,15 @@
+{% extends 'accounts/base.html' %}
+{% block title %}Home{% endblock %}
+{% block content %}
+    <h1>Welcome {{user}}</h1>
+    {% for user in all_users%}
+        <ul style="list-style: none;">
+            <li>Username: <a href="{% url 'profile' user.id%}">{{user.username}}</a></li>
+            <li>Bio: {{user.bio}}</li>
+            <li>Date Joined: {{user.date_joined}}</li>
+        </ul>
+        <hr>
+    {% empty %}
+        <p>No user!</p>
+    {% endfor %}
+{% endblock %}
